@@ -32,72 +32,75 @@ fetch("http://localhost:5678/api/works")
 */
 
 // Enregistrer le token
-localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY4Nzk3MzA2OSwiZXhwIjoxNjg4MDU5NDY5fQ.Bd465aySf1cTLckYqsqDePDMDjwLpTkdtdZM8-UkEwU');
+// localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY4Nzk3MzA2OSwiZXhwIjoxNjg4MDU5NDY5fQ.Bd465aySf1cTLckYqsqDePDMDjwLpTkdtdZM8-UkEwU');
 
 // Récupérer le token
-const token = localStorage.getItem('token');
+const token = localStorage.getItem("token");
 
 import {
-    showImages,
-    showCategories,
-    clearSessionStorage,
-    createContainerEdition,
-} from './functions.js';
+  showImages,
+  showCategories,
+  clearLocalStorage,
+  createContainerEdition,
+} from "./functions.js";
 
 //Récupérer les travaux
 fetch("http://localhost:5678/api/works")
-    .then(function (res) {
-        return res.json();
-    })
-    .then(function (data) {
-        showImages(data);
-    })
-    .catch(function (error) {
-        console.error(error);
-    });
+  .then(function (res) {
+    return res.json();
+  })
+  .then(function (data) {
+    showImages(data);
+  })
+  .catch(function (error) {
+    console.error(error);
+  });
 
 //Récupérer les catégories
 fetch("http://localhost:5678/api/categories")
-    .then(function(response) {
+  .then(function (response) {
     return response.json();
-    })
-    .then(function(data) {
-        showCategories(data);
-    })
-    .catch(function(error) {
-        console.error(error);
-    });
+  })
+  .then(function (data) {
+    showCategories(data);
+  })
+  .catch(function (error) {
+    console.error(error);
+  });
 
 //********************test****************************************/
 
-document.addEventListener("DOMContentLoaded", function() {
+// document.addEventListener("DOMContentLoaded", function () {
+if (
+  localStorage.getItem("token") &&
+  localStorage.getItem("token") !== "undefined"
+) {
+  console.log("sucessfully");
 
-    if (localStorage.getItem('token') && localStorage.getItem('token') !== "undefined") {
-       console.log("sucessfully");
+  createContainerEdition();
 
-       createContainerEdition();
- 
-       document.getElementById("login").innerHTML = "logout";
- 
-       let btnLogout = document.getElementById("login");
-       btnLogout.addEventListener("click", function() {
-          clearSessionStorage();
-       })
-    }
- });
+  document.getElementById("login").innerHTML = "logout";
 
- // modal
+  let btnLogout = document.getElementById("login");
+  btnLogout.addEventListener("click", function (event) {
+    event.preventDefault();
+    clearLocalStorage();
+  });
+}
+//});
 
- document.addEventListener("DOMContentLoaded", function() {
-    const openModalBtn = document.getElementById("openModalBtn");
-    const closeModalBtn = document.getElementById("closeModalBtn");
-    const modal = document.getElementById("modal");
+// modal
 
-    openModalBtn.addEventListener("click", function() {
-        modal.style.display = "block";
-    });
+// document.addEventListener("DOMContentLoaded", function () {
+const openModalBtn = document.getElementById("openModalBtn");
+const closeModalBtn = document.getElementById("closeModalBtn");
+const modal = document.getElementById("modal");
 
-    closeModalBtn.addEventListener("click", function() {
-        modal.style.display = "none";
-    });
+openModalBtn.addEventListener("click", function () {
+  modal.style.display = "block";
 });
+
+closeModalBtn.addEventListener("click", function () {
+  modal.style.display = "none";
+});
+//});
