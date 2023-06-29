@@ -1,7 +1,7 @@
 export {
     showImages,
     showCategories,
-    logoutSessionStorage,
+    clearSessionStorage,
     createContainerEdition,
 };
 
@@ -63,9 +63,9 @@ function showCategories(categories) {
     }
 
 // Deconnexion
-function logoutSessionStorage() {
+function clearSessionStorage() {
     sessionStorage.clear();
-    document.location.href = "login.html";
+    document.location.href = "index.html";
 }
 
 function createContainerEdition() {
@@ -86,12 +86,6 @@ function createContainerEdition() {
     element.textContent = textContent;
     parent.insertAdjacentElement(position, element);
     return element;
-}
-
-function createIcon(classes) {
-    const icon = document.createElement('i');
-    icon.classList.add(...classes);
-    return icon;
 }
 
 // Modal

@@ -40,7 +40,7 @@ const token = localStorage.getItem('token');
 import {
     showImages,
     showCategories,
-    logoutSessionStorage,
+    clearSessionStorage,
     createContainerEdition,
 } from './functions.js';
 
