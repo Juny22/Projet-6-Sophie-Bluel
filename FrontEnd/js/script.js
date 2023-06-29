@@ -31,6 +31,20 @@ fetch("http://localhost:5678/api/works")
     });
 */
 
+// Enregistrer le token
+localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY4Nzk3MzA2OSwiZXhwIjoxNjg4MDU5NDY5fQ.Bd465aySf1cTLckYqsqDePDMDjwLpTkdtdZM8-UkEwU');
+
+// Récupérer le token
+const token = localStorage.getItem('token');
+
+import {
+    showImages,
+    showCategories,
+    logoutSessionStorage,
+    createContainerEdition,
+} from './functions.js';
+
+//Récupérer les travaux
 fetch("http://localhost:5678/api/works")
     .then(function (res) {
         return res.json();
@@ -42,68 +56,48 @@ fetch("http://localhost:5678/api/works")
         console.error(error);
     });
 
-function showImages(images) {
-    const conteneurImages = document.querySelector('.gallery');
-    conteneurImages.innerHTML = "";
-    images.forEach(element => {
-        const figure = document.createElement('figure');
-        const figcaption = document.createElement('figcaption');
-        const img = document.createElement('img');
-
-        img.setAttribute('src', element.imageUrl);
-        img.setAttribute('alt', element.title);
-        img.setAttribute('category', element.categoryId);
-        img.setAttribute('crossorigin', 'anonymous');
-        figcaption.textContent = element.title;
-
-        figure.appendChild(img);
-        figure.appendChild(figcaption);
-        conteneurImages.appendChild(figure);
-    });
-}
-
+//Récupérer les catégories
 fetch("http://localhost:5678/api/categories")
-  .then(function(response) {
+    .then(function(response) {
     return response.json();
-  })
-  .then(function(data) {
-    showCategories(data);
-  })
-  .catch(function(error) {
-    console.error(error);
-  });
-
-function showCategories(categories) {
-    const divPortfolio = document.getElementById('portfolio');
-    const divBoutons = document.createElement('div');
-    divBoutons.className = 'categories';
-
-    const btnAll = document.createElement('button');
-    btnAll.textContent = 'Tous';
-    divBoutons.appendChild(btnAll);
-
-    categories.forEach(categorie => {
-        const button = document.createElement('button');
-        button.textContent = categorie.name;
-        button.id = categorie.id;
-        divBoutons.appendChild(button);
-        divPortfolio.querySelector('h2').insertAdjacentElement('afterend', divBoutons);
-
-        button.addEventListener('click', function() {
-            const id = this.id;
-            document.querySelectorAll('.gallery img').forEach(image => {
-                if (image.getAttribute('category') === id) {
-                    image.parentElement.style.display = 'block';
-                } else {
-                    image.parentElement.style.display = 'none';
-                }
-            });
-        });
+    })
+    .then(function(data) {
+        showCategories(data);
+    })
+    .catch(function(error) {
+        console.error(error);
     });
 
-    btnAll.addEventListener('click', function() {
-        document.querySelectorAll('.gallery img').forEach(image => {
-            image.parentElement.style.display = 'block';
-        });
+//********************test****************************************/
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    if (localStorage.getItem('token') && localStorage.getItem('token') !== "undefined") {
+       console.log("sucessfully");
+
+       createContainerEdition();
+ 
+       document.getElementById("login").innerHTML = "logout";
+ 
+       let btnLogout = document.getElementById("login");
+       btnLogout.addEventListener("click", function() {
+          logoutSessionStorage();
+       })
+    }
+ });
+
+ // modal
+
+ document.addEventListener("DOMContentLoaded", function() {
+    const openModalBtn = document.getElementById("openModalBtn");
+    const closeModalBtn = document.getElementById("closeModalBtn");
+    const modal = document.getElementById("modal");
+
+    openModalBtn.addEventListener("click", function() {
+        modal.style.display = "block";
     });
-}
+
+    closeModalBtn.addEventListener("click", function() {
+        modal.style.display = "none";
+    });
+});
