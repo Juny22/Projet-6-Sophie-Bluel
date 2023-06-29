@@ -8,6 +8,9 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/fontawesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
+	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
@@ -17,7 +20,7 @@
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<li><a href="./login.html">login</a></li>
+			<li><a id="login" href="./login.html">login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -36,7 +39,6 @@
 	</section>
 	<section id="portfolio">
 		<h2>Mes Projets</h2>
-		<div class="categories"></div>
 		<div class="gallery">
 			<!-- Images dynamiques -->
 		</div>
@@ -56,6 +58,24 @@
 	</section>
 </main>
 
+<!-- test modal -->
+
+<aside id="modal1" class="modal-window" aria-hidden="true" role="dialog" aria-modal="false" aria-labelledby="titlemodal">
+	<section class="modal-wrapper">
+		<div class="button-container">
+			<a href="#" title="Fermer la fenêtre"></a>
+		</div>
+		<div>
+			<h2>Galerie photo</h2>
+			</div>
+			<form action="#" method="post">
+				<input type="submit" value="Ajouter une photo">
+			</form>
+			<div class="delete">Supprimer la gallerie</div>
+		</div>
+	</section>
+</aside>
+
 <footer>
 	<nav>
 		<ul>
@@ -66,3 +86,4 @@
 <script type="module" src="./js/script.js"></script>
 </body>
 </html>
+
