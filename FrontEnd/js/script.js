@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function() {
  
        let btnLogout = document.getElementById("login");
        btnLogout.addEventListener("click", function() {
-          logoutSessionStorage();
+          clearSessionStorage();
        })
     }
  });
