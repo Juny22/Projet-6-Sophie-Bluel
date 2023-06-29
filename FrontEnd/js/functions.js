@@ -65,7 +65,7 @@ function showCategories(categories) {
 // Deconnexion
 function clearSessionStorage() {
     sessionStorage.clear();
-    document.location.href = "index.html";
+    document.location.href = "../index.html";
 }
 
 function createContainerEdition() {
