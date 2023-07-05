@@ -32,7 +32,7 @@ fetch("http://localhost:5678/api/works")
 */
 
 // Enregistrer le token
-localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY4Nzk3MzA2OSwiZXhwIjoxNjg4MDU5NDY5fQ.Bd465aySf1cTLckYqsqDePDMDjwLpTkdtdZM8-UkEwU');
+// localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY4Nzk3MzA2OSwiZXhwIjoxNjg4MDU5NDY5fQ.Bd465aySf1cTLckYqsqDePDMDjwLpTkdtdZM8-UkEwU');
 
 // Récupérer le token
 const token = localStorage.getItem('token');
@@ -40,8 +40,9 @@ const token = localStorage.getItem('token');
 import {
     showImages,
     showCategories,
-    clearSessionStorage,
-    createContainerEdition,
+    clearLocalStorage,
+    modalAdminMode,
+    displayWorks,
 } from './functions.js';
 
 //Récupérer les travaux
@@ -68,36 +69,35 @@ fetch("http://localhost:5678/api/categories")
         console.error(error);
     });
 
-//********************test****************************************/
+// login
 
 document.addEventListener("DOMContentLoaded", function() {
 
     if (localStorage.getItem('token') && localStorage.getItem('token') !== "undefined") {
        console.log("sucessfully");
 
-       createContainerEdition();
- 
+       modalAdminMode();
+
        document.getElementById("login").innerHTML = "logout";
  
        let btnLogout = document.getElementById("login");
-       btnLogout.addEventListener("click", function() {
-          clearSessionStorage();
+       btnLogout.addEventListener("click", function (event) {
+            event.preventDefault();
+            clearLocalStorage();
        })
     }
- });
-
- // modal
-
- document.addEventListener("DOMContentLoaded", function() {
-    const openModalBtn = document.getElementById("openModalBtn");
-    const closeModalBtn = document.getElementById("closeModalBtn");
-    const modal = document.getElementById("modal");
-
-    openModalBtn.addEventListener("click", function() {
-        modal.style.display = "block";
-    });
-
-    closeModalBtn.addEventListener("click", function() {
-        modal.style.display = "none";
-    });
 });
+
+//modal travaux
+
+async function getWorks() {
+    try {
+      const response = await fetch('http://localhost:5678/api/works');
+      const works = await response.json();
+      displayWorks(works);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+getWorks();

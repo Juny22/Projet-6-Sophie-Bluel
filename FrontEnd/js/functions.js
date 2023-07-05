@@ -1,8 +1,9 @@
 export {
     showImages,
     showCategories,
-    clearSessionStorage,
-    createContainerEdition,
+    clearLocalStorage,
+    modalAdminMode,
+    displayWorks,
 };
 
 // Montrer les images
@@ -31,6 +32,9 @@ function showCategories(categories) {
     const divPortfolio = document.getElementById('portfolio');
     const divBoutons = document.createElement('div');
     divBoutons.className = 'categories';
+        if (localStorage.getItem('token')) {
+            divBoutons.style.display = 'none';
+        }
 
     const btnAll = document.createElement('button');
     btnAll.textContent = 'Tous';
@@ -62,30 +66,33 @@ function showCategories(categories) {
         });
     }
 
+function modalAdminMode() {
+    if (localStorage.getItem ('token')) {
+        document.getElementById("admin-modal").style.display = "inline";
+    }
+}
+
 // Deconnexion
-function clearSessionStorage() {
-    sessionStorage.clear();
-    document.location.href = "../index.html";
+function clearLocalStorage() {
+    localStorage.clear();
+    document.location.href = "./index.html";
 }
 
-function createContainerEdition() {
-    const containerEdition = createAndAppendElement(document.body, 'div', ['container-edition'], '', 'afterbegin');
-    const icon = createAndAppendElement(containerEdition, 'i', ['far', 'fa-edit', 'fa-pen-to-square']);
-    const text = createAndAppendElement(containerEdition, 'div', ['text']);
+// modal
+// afficher les travaux
 
-    const p1 = createAndAppendElement(text, 'p', [], "Mode éditon");
-    p1.setAttribute('id', 'thin');
- 
-    const p2 = createAndAppendElement(text, 'button', [], "publier les changements");
-    p2.setAttribute('id', 'bold');
- }
+function displayWorks(works) {
 
- function createAndAppendElement(parent, elementType, classList = [], textContent = '', position = 'beforeend') {
-    const element = document.createElement(elementType);
-    element.classList.add(...classList);
-    element.textContent = textContent;
-    parent.insertAdjacentElement(position, element);
-    return element;
+    const gallery = document.querySelector(".gallery-container");
+    gallery.innerHTML = "";
+
+    for (let i = 0; i < works.length; i++) {
+    const work = works[i];
+
+    const galleryItem = document.createElement("figure");
+    const img = document.createElement('img');
+    galleryItem.innerHTML = `<img src="${works[i].imageUrl}" alt="${works[i].title}" crossorigin="same-origin">
+                            <figcaption>${works[i].title}</figcaption>`;
+    gallery.appendChild(galleryItem);
+    }
 }
-
-// Modal
