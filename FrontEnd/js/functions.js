@@ -92,7 +92,7 @@ function displayWorks(works) {
     const galleryItem = document.createElement("figure");
     const img = document.createElement('img');
     galleryItem.innerHTML = `<img src="${works[i].imageUrl}" alt="${works[i].title}" crossorigin="same-origin">
-                            <figcaption>${works[i].title}</figcaption>`;
+                            <figcaption>Éditer</figcaption>`;
     gallery.appendChild(galleryItem);
     }
 }
