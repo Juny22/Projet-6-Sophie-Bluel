@@ -36,6 +36,7 @@ fetch("http://localhost:5678/api/works")
 
 // Récupérer le token
 const token = localStorage.getItem('token');
+let works = [];
 
 import {
     showImages,
@@ -43,6 +44,7 @@ import {
     clearLocalStorage,
     modalAdminMode,
     displayWorks,
+    createContainerEdition,
 } from './functions.js';
 
 //Récupérer les travaux
@@ -51,7 +53,11 @@ fetch("http://localhost:5678/api/works")
         return res.json();
     })
     .then(function (data) {
+        works = data;
         showImages(data);
+        if (token && token !== "undefined") {
+            displayWorks(works);
+        }
     })
     .catch(function (error) {
         console.error(error);
@@ -70,13 +76,13 @@ fetch("http://localhost:5678/api/categories")
     });
 
 // login
+//document.addEventListener("DOMContentLoaded", function() {
 
-document.addEventListener("DOMContentLoaded", function() {
-
-    if (localStorage.getItem('token') && localStorage.getItem('token') !== "undefined") {
-       console.log("sucessfully");
+    if (token && token !== "undefined") {
+       console.log("login sucessfully");
 
        modalAdminMode();
+       createContainerEdition();
 
        document.getElementById("login").innerHTML = "logout";
  
@@ -86,18 +92,4 @@ document.addEventListener("DOMContentLoaded", function() {
             clearLocalStorage();
        })
     }
-});
-
-//modal travaux
-
-async function getWorks() {
-    try {
-      const response = await fetch('http://localhost:5678/api/works');
-      const works = await response.json();
-      displayWorks(works);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-getWorks();
+//});

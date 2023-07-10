@@ -4,6 +4,7 @@ export {
     clearLocalStorage,
     modalAdminMode,
     displayWorks,
+    createContainerEdition,
 };
 
 // Montrer les images
@@ -78,6 +79,25 @@ function clearLocalStorage() {
     document.location.href = "./index.html";
 }
 
+// Admin mode
+function createContainerEdition() {
+    const containerEdition = createAndAppendElement(document.body, 'div', ['container-edition'], '', 'afterbegin');
+    const icon = createAndAppendElement(containerEdition, 'i', ['far', 'fa-edit', 'fa-pen-to-square']);
+    const text = createAndAppendElement(containerEdition, 'div', ['text']);
+    const p1 = createAndAppendElement(text, 'p', [], "Mode éditon");
+    p1.setAttribute('id', 'thin');
+    const p2 = createAndAppendElement(text, 'button', [], "publier les changements");
+    p2.setAttribute('id', 'bold');
+ }
+
+function createAndAppendElement(parent, elementType, classList = [], textContent = '', position = 'beforeend') {
+    const element = document.createElement(elementType);
+    element.classList.add(...classList);
+    element.textContent = textContent;
+    parent.insertAdjacentElement(position, element);
+    return element;
+}
+
 // modal
 // afficher les travaux
 
@@ -91,8 +111,38 @@ function displayWorks(works) {
 
     const galleryItem = document.createElement("figure");
     const img = document.createElement('img');
-    galleryItem.innerHTML = `<img src="${works[i].imageUrl}" alt="${works[i].title}" crossorigin="same-origin">
-                            <figcaption>Éditer</figcaption>`;
+    galleryItem.innerHTML = `<div class="gallery-item">
+                                <i class="fa-solid fa-arrows-up-down-left-right arrows-icon" aria-hidden="true"></i>
+                                <a href="#" data-work-id="${work.id}" class="trashbin" title="Supprimer ce projet">
+                                <i class="fa fa-trash delete-icon" aria-hidden="true"></i>
+                                </a>
+                                <img src="${work.imageUrl}" alt="${work.title}" crossorigin="same-origin">
+                                <figcaption>éditer</figcaption>
+                            </div>`;
+    //supprimer les travaux                      
+    const deleteButton = galleryItem.querySelector('.trashbin');
+    deleteButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        const workId = this.getAttribute('data-work-id');
+        deleteWorksData(workId);
+    });
+
     gallery.appendChild(galleryItem);
     }
 }
+
+function deleteWorksData(id) {
+    fetch(`http://localhost:5678/api/works/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'content-type': "application/Json",
+            'authorization': "Bearer " + localStorage.getItem("token"),
+        },
+    })
+        .then((response) => {
+            if (response.status === 201) {
+                displayWorksModal();
+                displayWorks();
+            };
+        });
+};

@@ -7,7 +7,7 @@ let previouslyFocusdElement = null
 const openModal = function (e) {
     e.preventDefault()
     modal = document.querySelector(e.target.getAttribute('href'))
-    focusables = Array.from(modal.querySelectorAll(focusableSelector))
+    focusables = Array.from(modal.querySelectorAll('focusableSelector'))
     previouslyFocusdElement = document.querySelector(':focus')
     modal.style.display = null
     modal.removeAttribute('aria-hidden')
@@ -67,3 +67,20 @@ window.addEventListener('keydown', function (e) {
     }
 })
 
+//Cacher la modal-delete par la modal-add
+const modalDelete = document.getElementById('modal-delete');
+const modalAdd = document.getElementById('modal-add');
+const modalTrigger = document.getElementById('modal-trigger');
+const modalBack = document.getElementById('modal-arrowback');
+
+modalTrigger.addEventListener('click', function() {
+  modalDelete.style.display = 'none';
+  modalAdd.style.display = 'block';
+});
+modalBack.addEventListener('click', function() {
+    modalAdd.style.display = 'none';
+    modalDelete.style.display = 'block';
+});
+modalAdd.addEventListener('click', function(event) {
+    event.stopPropagation();
+});
