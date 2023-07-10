@@ -143,6 +143,12 @@ function deleteWorksData(id) {
             if (response.status === 201) {
                 displayWorksModal();
                 displayWorks();
-            };
+            } else {
+                throw new Error ('Failed to delete work');
+            }
+        })
+        .catch ((error) => {
+            console.error(error);
+            alert('Échec de la suppression.');
         });
 };
