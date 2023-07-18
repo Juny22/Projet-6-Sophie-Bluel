@@ -1,69 +1,66 @@
-let modal = null
-const focusableSelector = 'button, a, input, textarea'
-let focusables = []
-let previouslyFocusdElement = null
+let modal = null;
+const focusableSelector = 'button, a, input, textarea';
+let focusables = [];
+let previouslyFocusdElement = null;
 
 // Ouvrir la modale
 const openModal = function (e) {
-    e.preventDefault()
-    modal = document.querySelector(e.target.getAttribute('href'))
-    focusables = Array.from(modal.querySelectorAll('focusableSelector'))
-    previouslyFocusdElement = document.querySelector(':focus')
-    modal.style.display = null
-    modal.removeAttribute('aria-hidden')
-    modal.setAttribute('aria-modal', 'true')
-    modal.addEventListener('click', closeModal)
-    modal.querySelector('.js-modal-close').addEventListener('click', closeModal)
-    modal.querySelector('.js-modal-stop').addEventListener('click', stopProgagation)
+    e.preventDefault();
+    modal = document.querySelector(e.target.getAttribute('href'));
+    focusables = Array.from(modal.querySelectorAll('focusableSelector'));
+    previouslyFocusdElement = document.querySelector(':focus');
+    modal.style.display = null;
+    modal.removeAttribute('aria-hidden');
+    modal.setAttribute('aria-modal', 'true');
+    Array.from(modal.querySelectorAll('.js-modal-close')).forEach((closeBtn) => closeBtn.addEventListener('click', closeModal));
 }
  //Fermer la modale
 const closeModal = function (e) {
-    if (modal === null) return
-    if (previouslyFocusdElement !== null) previouslyFocusdElement.focus()
-    e.preventDefault()
-    modal.style.display = "none"
-    modal.setAttribute('aria-hidden', 'true')
-    modal.removeAttribute('aria-modal')
-    modal.removeEventListener('click', closeModal)
-    modal.querySelector('.js-modal-close').removeEventListener('click', closeModal)
-    modal.querySelector('.js-modal-stop').removeEventListener('click', stopProgagation)
-    modal = null
+    if (modal === null) return;
+    if (previouslyFocusdElement !== null) previouslyFocusdElement.focus();
+    e.preventDefault();
+    modal.style.display = "none";
+    modal.setAttribute('aria-hidden', 'true');
+    modal.removeAttribute('aria-modal');
+    modal.removeEventListener('click', closeModal);
+    Array.from(modal.querySelectorAll('.js-modal-close')).forEach((closeBtn) => closeBtn.removeEventListener('click', closeModal));
+    modal.querySelector('.js-modal-stop').removeEventListener('click', stopProgagation);
+    modal = null;
 }
 
-//Empeche la fermeture au clic sur la modale
 const stopProgagation = function (e) {
     e.stopPropagation()
 }
 
 const focusInModal = function (e) {
-    e.preventDefault()
-    let index = focusables.findIndex(f => f === modal.querySelector(':focus'))
+    e.preventDefault();
+    let index = focusables.findIndex(f => f === modal.querySelector(':focus'));
     if (e.shiftkey === true) {
-        index--
+        index--;
     } else {
-        index++
+        index++;
     }
     debugger
     if (index >= focusables.lenght) {
-        index= 0
+        index= 0;
     }
     if (index < 0) {
-        index = focusables.lenght - 1
+        index = focusables.lenght - 1;
     }
-    focusables[index].focus()
+    focusables[index].focus();
 }
 
 document.querySelectorAll('.js-modal').forEach(a => {
-    a.addEventListener('click', openModal)
+    a.addEventListener('click', openModal);
 })
 
 //Fermer la modale avec la touche Echape "Esc"
 window.addEventListener('keydown', function (e) {
     if (e.key === "Escape" || e.key === "Esc") {
-        closeModal(e)
+        closeModal(e);
     }
     if (e.key === 'Tab' && modal !== null) {
-        focusInModal(e)
+        focusInModal(e);
     }
 })
 
@@ -81,6 +78,49 @@ modalBack.addEventListener('click', function() {
     modalAdd.style.display = 'none';
     modalDelete.style.display = 'block';
 });
-modalAdd.addEventListener('click', function(event) {
-    event.stopPropagation();
-});
+
+document.querySelector("#file").addEventListener("change", (e) => {
+    e.preventDefault();
+    document.querySelector(".fa-image").style.display = "none";
+    document.querySelector(".hide-label").style.display = "none";
+    document.querySelector(".hide-jpg").style.display = "none";
+    console.log("change");
+    // L'image img#image
+    var image = document.getElementById("preview-img");
+    // e.files contient un objet FileList
+    console.log("e", e);
+    const [picture] = e.srcElement.files;
+  
+    if (picture) {
+      // On change l'URL de l'image
+      image.src = URL.createObjectURL(picture);
+    }
+  });
+
+const addPictureForm = document.getElementById('add-picture-form');
+
+addPictureForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    const formData = new FormData(addPictureForm);
+    
+    fetch('http://localhost:5678/api/works', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
+      },
+      body: formData
+    })
+      .then(response => {
+        if (response.status === 201) {
+          displayWorksModal();
+          displayWorks();
+        } else {
+          throw new Error('Échec de l\'ajout de la photo.');
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        alert('Échec de l\'ajout de la photo.');
+      });
+  });

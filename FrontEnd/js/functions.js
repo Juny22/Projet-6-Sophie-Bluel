@@ -5,6 +5,7 @@ export {
     modalAdminMode,
     displayWorks,
     createContainerEdition,
+    displayCategories,
 };
 
 // Montrer les images
@@ -152,3 +153,12 @@ function deleteWorksData(id) {
             alert('Échec de la suppression.');
         });
 };
+
+//Catergories admin
+function displayCategories(categories) {
+    const categorySelect = document.getElementById("category-input");
+    for (let category of categories) {
+      // Ajoute l'option de catégorie au menu déroulant
+      categorySelect.innerHTML += `<option value="${category.id}">${category.name}</option>`;
+    } 
+  }

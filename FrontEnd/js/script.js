@@ -45,6 +45,7 @@ import {
     modalAdminMode,
     displayWorks,
     createContainerEdition,
+    displayCategories,
 } from './functions.js';
 
 //Récupérer les travaux
@@ -70,6 +71,7 @@ fetch("http://localhost:5678/api/categories")
     })
     .then(function(data) {
         showCategories(data);
+        displayCategories(data);
     })
     .catch(function(error) {
         console.error(error);
@@ -83,6 +85,8 @@ fetch("http://localhost:5678/api/categories")
 
        modalAdminMode();
        createContainerEdition();
+       const modifPicture = document.getElementById('mod-picture');
+        modifPicture.style.display = 'block';
 
        document.getElementById("login").innerHTML = "logout";
  
