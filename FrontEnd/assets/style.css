@@ -144,6 +144,7 @@ li:hover {
 #contact {
 	width: 50%;
 margin: auto;
+margin-top: 20px;
 }
 #contact > * {
 	text-align: center;
@@ -305,6 +306,7 @@ a {
 	align-items: center;
 	font-size: 1rem;
 	font-family: "Work Sans";
+	margin-left: 5px;
 }
 
 #bold {
@@ -561,4 +563,23 @@ input[type="file"] {
 }
 .button-container {
 	position: relative;
+}
+
+.proj-mod {
+	position: relative;
+}
+
+.modif-admin {
+	position: absolute;
+	left: 62%;
+	top: 10px;
+}
+
+figure {
+	position: relative;
+}
+
+.mod-picture {
+	position: absolute;
+	left: 200px;
 }
