@@ -574,12 +574,3 @@ input[type="file"] {
 	left: 62%;
 	top: 10px;
 }
-
-figure {
-	position: relative;
-}
-
-.mod-picture {
-	position: absolute;
-	left: 200px;
-}
