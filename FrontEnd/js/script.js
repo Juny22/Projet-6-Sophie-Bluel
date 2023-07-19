@@ -47,22 +47,26 @@ import {
     createContainerEdition,
     displayCategories,
 } from './functions.js';
+export {fetchWorks}
 
-//Récupérer les travaux
-fetch("http://localhost:5678/api/works")
-    .then(function (res) {
-        return res.json();
-    })
-    .then(function (data) {
-        works = data;
-        showImages(data);
-        if (token && token !== "undefined") {
-            displayWorks(works);
-        }
-    })
-    .catch(function (error) {
-        console.error(error);
-    });
+function fetchWorks () {
+    //Récupérer les travaux
+    fetch("http://localhost:5678/api/works")
+        .then(function (res) {
+            return res.json();
+        })
+        .then(function (data) {
+            works = data;
+            showImages(data);
+            if (token && token !== "undefined") {
+                displayWorks(works);
+            }
+        })
+        .catch(function (error) {
+            console.error(error);
+        });
+}
+fetchWorks();
 
 //Récupérer les catégories
 fetch("http://localhost:5678/api/categories")

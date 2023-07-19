@@ -1,3 +1,7 @@
+
+import { fetchWorks } from './script.js';
+
+
 let modal = null;
 const focusableSelector = 'button, a, input, textarea';
 let focusables = [];
@@ -113,8 +117,7 @@ addPictureForm.addEventListener('submit', function(event) {
     })
       .then(response => {
         if (response.status === 201) {
-          displayWorksModal();
-          displayWorks();
+          fetchWorks()
         } else {
           throw new Error('Échec de l\'ajout de la photo.');
         }

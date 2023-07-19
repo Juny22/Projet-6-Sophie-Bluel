@@ -1,3 +1,5 @@
+import { fetchWorks } from "./script.js";
+
 export {
     showImages,
     showCategories,
@@ -141,9 +143,8 @@ function deleteWorksData(id) {
         },
     })
         .then((response) => {
-            if (response.status === 201) {
-                displayWorksModal();
-                displayWorks();
+            if (response.status === 204) {
+                fetchWorks();
             } else {
                 throw new Error ('Failed to delete work');
             }
