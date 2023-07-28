@@ -29,7 +29,9 @@
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
-			<a href="#" id="mod-picture" style="display: none;"><i class="fa-regular fa-pen-to-square"></i>modifier</a>
+			<div class="m-picture">
+				<a href="#" id="mod-picture" style="display: none;"><i class="fa-regular fa-pen-to-square"></i>modifier</a>
+			</div>
 		</figure>
 		<article>
 			<h2>Designer d'espace</h2>
@@ -56,7 +58,7 @@
 					<!--gallery-->
 				</div>
 				<div class="grey-line"></div>
-					<input type="submit" value="Ajouter une photo" id="modal-trigger">
+					<input type="submit" value="Ajouter une photo" id="modal-trigger" class="input-add">
 				<div class="delete">Supprimer la gallerie</div>
 			</div>
 		</section>
@@ -87,7 +89,7 @@
 						<!-- Les catégories -->
 					</select>
 					<div class="grey-line"></div>
-					<input type="submit" value="Valider">
+					<input type="submit" value="Valider" class="valid-form" id="submit-button">
 				</form>
 			</div>
 		</div>
@@ -121,7 +123,7 @@
 	</nav>
 </footer>
 <script type="module" src="./js/script.js"></script>
-<script src="./js/modal.js"></script>
+<script type="module" src="./js/modal.js"></script>
 </body>
 </html>
 

@@ -48,6 +48,9 @@ import {
     displayCategories,
 } from './functions.js';
 
+export {fetchWorks}
+
+function fetchWorks () {
 //Récupérer les travaux
 fetch("http://localhost:5678/api/works")
     .then(function (res) {
@@ -63,6 +66,8 @@ fetch("http://localhost:5678/api/works")
     .catch(function (error) {
         console.error(error);
     });
+}
+fetchWorks();
 
 //Récupérer les catégories
 fetch("http://localhost:5678/api/categories")

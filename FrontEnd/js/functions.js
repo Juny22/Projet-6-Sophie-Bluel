@@ -8,6 +8,8 @@ export {
     displayCategories,
 };
 
+import { fetchWorks } from "./script.js";
+
 // Montrer les images
 function showImages(images) {
     const conteneurImages = document.querySelector('.gallery');
@@ -141,9 +143,8 @@ function deleteWorksData(id) {
         },
     })
         .then((response) => {
-            if (response.status === 201) {
-                displayWorksModal();
-                displayWorks();
+            if (response.status === 204) {
+                fetchWorks();
             } else {
                 throw new Error ('Failed to delete work');
             }

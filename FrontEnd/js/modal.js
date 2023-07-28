@@ -1,3 +1,5 @@
+import { fetchWorks } from "./script.js";
+
 let modal = null;
 const focusableSelector = 'button, a, input, textarea';
 let focusables = [];
@@ -7,7 +9,7 @@ let previouslyFocusdElement = null;
 const openModal = function (e) {
     e.preventDefault();
     modal = document.querySelector(e.target.getAttribute('href'));
-    focusables = Array.from(modal.querySelectorAll('focusableSelector'));
+    focusables = Array.from(modal.querySelectorAll(focusableSelector));
     previouslyFocusdElement = document.querySelector(':focus');
     modal.style.display = null;
     modal.removeAttribute('aria-hidden');
@@ -24,11 +26,11 @@ const closeModal = function (e) {
     modal.removeAttribute('aria-modal');
     modal.removeEventListener('click', closeModal);
     Array.from(modal.querySelectorAll('.js-modal-close')).forEach((closeBtn) => closeBtn.removeEventListener('click', closeModal));
-    modal.querySelector('.js-modal-stop').removeEventListener('click', stopProgagation);
+    modal.querySelector('.js-modal-stop').removeEventListener('click', stopPropagation);
     modal = null;
 }
 
-const stopProgagation = function (e) {
+const stopPropagation = function (e) {
     e.stopPropagation()
 }
 
@@ -103,7 +105,7 @@ addPictureForm.addEventListener('submit', function(event) {
     event.preventDefault();
     
     const formData = new FormData(addPictureForm);
-    
+   
     fetch('http://localhost:5678/api/works', {
       method: 'POST',
       headers: {
@@ -113,10 +115,9 @@ addPictureForm.addEventListener('submit', function(event) {
     })
       .then(response => {
         if (response.status === 201) {
-          displayWorksModal();
-          displayWorks();
+          fetchWorks();
         } else {
-          throw new Error('Échec de l\'ajout de la photo.');
+          throw new Error('Failed to add work.');
         }
       })
       .catch(error => {
@@ -124,3 +125,38 @@ addPictureForm.addEventListener('submit', function(event) {
         alert('Échec de l\'ajout de la photo.');
       });
   });
+
+//Fermer la modal au clic quand un projet est ajouté
+
+const closeButton = document.getElementById('submit-button');
+
+closeButton.addEventListener('click', function() {
+    closeButtonModal();
+});
+
+const closeButtonModal = function() {
+  if (modal === null) return;
+  if (previouslyFocusdElement !== null) previouslyFocusdElement.focus();
+  modal.style.display = "none";
+  modal.setAttribute('aria-hidden', 'true');
+  modal.removeAttribute('aria-modal');
+  Array.from(modal.querySelectorAll('.js-modal-close')).forEach((closeBtn) => closeBtn.removeEventListener('click', closeModal));
+  modal.querySelector('.js-modal-stop').removeEventListener('click', stopPropagation);
+  modal = null;
+};
+
+//change la couleur du bouton valider lorsque le formulaire est rempli
+
+const submitButton = document.querySelector('.valid-form');
+
+addPictureForm.querySelectorAll('[required]').forEach(input => {
+  input.addEventListener('input', function() {
+    const isFormValid = Array.from(addPictureForm.querySelectorAll('[required]')).every(input => input.value.trim() !== '');
+    if (isFormValid) {
+      submitButton.classList.add('valid-color');
+      console.log("changer la couleur")
+    } else {
+      submitButton.classList.remove('valid-color');
+    }
+  });
+});
