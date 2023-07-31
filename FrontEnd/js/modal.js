@@ -1,16 +1,14 @@
 import { fetchWorks } from "./script.js";
 
 let modal = null;
-const focusableSelector = 'button, a, input, textarea';
-let focusables = [];
-let previouslyFocusdElement = null;
+
+
 
 // Ouvrir la modale
 const openModal = function (e) {
     e.preventDefault();
     modal = document.querySelector(e.target.getAttribute('href'));
-    focusables = Array.from(modal.querySelectorAll(focusableSelector));
-    previouslyFocusdElement = document.querySelector(':focus');
+    
     modal.style.display = null;
     modal.removeAttribute('aria-hidden');
     modal.setAttribute('aria-modal', 'true');
@@ -19,38 +17,17 @@ const openModal = function (e) {
  //Fermer la modale
 const closeModal = function (e) {
     if (modal === null) return;
-    if (previouslyFocusdElement !== null) previouslyFocusdElement.focus();
     e.preventDefault();
     modal.style.display = "none";
     modal.setAttribute('aria-hidden', 'true');
     modal.removeAttribute('aria-modal');
     modal.removeEventListener('click', closeModal);
     Array.from(modal.querySelectorAll('.js-modal-close')).forEach((closeBtn) => closeBtn.removeEventListener('click', closeModal));
-    modal.querySelector('.js-modal-stop').removeEventListener('click', stopPropagation);
     modal = null;
 }
 
-const stopPropagation = function (e) {
-    e.stopPropagation()
-}
 
-const focusInModal = function (e) {
-    e.preventDefault();
-    let index = focusables.findIndex(f => f === modal.querySelector(':focus'));
-    if (e.shiftkey === true) {
-        index--;
-    } else {
-        index++;
-    }
-    debugger
-    if (index >= focusables.lenght) {
-        index= 0;
-    }
-    if (index < 0) {
-        index = focusables.lenght - 1;
-    }
-    focusables[index].focus();
-}
+
 
 document.querySelectorAll('.js-modal').forEach(a => {
     a.addEventListener('click', openModal);
@@ -60,9 +37,6 @@ document.querySelectorAll('.js-modal').forEach(a => {
 window.addEventListener('keydown', function (e) {
     if (e.key === "Escape" || e.key === "Esc") {
         closeModal(e);
-    }
-    if (e.key === 'Tab' && modal !== null) {
-        focusInModal(e);
     }
 })
 
@@ -136,12 +110,10 @@ closeButton.addEventListener('click', function() {
 
 const closeButtonModal = function() {
   if (modal === null) return;
-  if (previouslyFocusdElement !== null) previouslyFocusdElement.focus();
   modal.style.display = "none";
   modal.setAttribute('aria-hidden', 'true');
   modal.removeAttribute('aria-modal');
   Array.from(modal.querySelectorAll('.js-modal-close')).forEach((closeBtn) => closeBtn.removeEventListener('click', closeModal));
-  modal.querySelector('.js-modal-stop').removeEventListener('click', stopPropagation);
   modal = null;
 };
 
