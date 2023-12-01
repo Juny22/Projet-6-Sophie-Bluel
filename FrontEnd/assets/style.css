@@ -27,6 +27,7 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -52,18 +53,26 @@ table {
 }
 /** end reset css**/
 body {
-	max-width: 1140px;
-	margin:auto;
+	margin: auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	background-color: #FFFEF8;
 }
+
+main {
+	max-width: 1040px;
+	margin: auto;
+}
+
 header {
+	max-width: 1240px;
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin: auto;
+	padding-top: 50px;
 }
 section {
-	margin: 50px 0
+	margin: 50px 0;
 }
 
 h1{
@@ -72,7 +81,7 @@ h1{
 	font-family: 'Syne';
 	font-size: 22px;
 	font-weight: 800;
-	color: #B1663C
+	color: #B1663C;
 }
 
 h1 > span {
@@ -86,13 +95,12 @@ h2{
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 30px;
-	color: #1D6154
+	color: #1D6154;
 }
 nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
-
 }
 nav li {
 	padding: 0 10px;
@@ -100,23 +108,25 @@ nav li {
 }
 
 li:hover {
-	color: #B1663C;
+	font-weight: bold;
+	cursor: pointer;
 }
 #introduction {
 	display: flex;
 	align-items: center;
 }
 #introduction figure {
-	flex: 1
+	flex: 1;
 }
 #introduction img {
 	display: block;
-	margin: auto;
 	width: 80%;
+
 }
 
 #introduction article {
-	flex: 1
+	flex: 1;
+	max-width: 410px;
 }
 #introduction h2 {
 	margin-bottom: 1em;
@@ -198,8 +208,15 @@ margin-top: 20px;
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin: 20px;
+	padding-top: 20px;
 }
+
+footer {
+	background-color: white;
+	width: 100%;
+}
+
 /* rajout *******************************/
 .categories {
 	display: flex;
@@ -231,7 +248,6 @@ footer nav ul {
 /*Login *******************/
 a {
     text-decoration: none;
-	font-weight: bold;
 }
 
 #login_form {
@@ -496,7 +512,7 @@ a:visited {
 	flex-direction: column;
 	max-width: 630px;
 	padding: 0 60px;
-	width: 100%
+	width: 100%;
 }
 #add-picture #image-input {
 	box-shadow: none
@@ -515,6 +531,10 @@ a:visited {
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+.hide-jpg {
+	margin-bottom: 10px;
 }
 
 .upload-container {
@@ -583,7 +603,6 @@ main {
 }
 
 .m-picture {
-	margin-left: 60px;
 	margin-top: 20px;
 }
 
@@ -600,10 +619,52 @@ main {
 	text-align: center;
 	border-radius: 60px;
 	border: none;
- 	outline: none
+ 	outline: none;
   }
 
 .valid-form.valid-color {
 	background-color: #1D6154;
 	cursor: pointer;
+}
+
+.spend-form {
+	display: block;
+	align-items: center;
+	justify-content: center;
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	margin : 2em auto ;
+	padding: 10px;
+	width: 300px;
+	text-align: center;
+	border-radius: 60px;
+	border: none;
+ 	outline: none;
+	background-color: #1D6154;
+  }
+
+.spend-form:hover {
+	background-color: #0E2F28;
+	cursor: pointer;
+}
+
+.mention {
+	margin: auto;
+	padding-bottom: 5px;
+}
+
+.insta-size {
+	height: 20px;
+}
+
+.insta-size:hover {
+	transform: scale(1.1);
+}
+
+.footer-login {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
 }
